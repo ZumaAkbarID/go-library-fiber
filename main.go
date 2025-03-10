@@ -1,14 +1,23 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/ZumaAkbarID/go-library-fiber/internal/config"
+	"github.com/ZumaAkbarID/go-library-fiber/internal/connection"
+	"github.com/ZumaAkbarID/go-library-fiber/internal/repository"
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
+	cnf := config.Get()
+	dbConnection := connection.GetDatabase(cnf.Database)
 
 	app := fiber.New()
 
+	customerRepository := repository.NewCustomer(dbConnection)
+
 	app.Get("/", Developer)
 
-	app.Listen(":3000")
+	app.Listen(cnf.Server.Host + ":" + cnf.Server.Port)
 
 }
 
