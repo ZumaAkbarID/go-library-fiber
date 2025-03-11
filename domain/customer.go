@@ -3,6 +3,7 @@ package domain
 import (
 	"context"
 	"database/sql"
+	"github.com/ZumaAkbarID/go-library-fiber/internal/dto"
 )
 
 type Customer struct {
@@ -23,5 +24,6 @@ type CustomerRepository interface {
 }
 
 type CustomerService interface {
-	Index(ctx context.Context)
+	Index(ctx context.Context) ([]dto.CustomerData, error)
+	Create(ctx context.Context, req dto.CreateCustomerRequest) error
 }
